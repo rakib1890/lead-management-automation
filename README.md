@@ -22,9 +22,11 @@ An end-to-end lead management system for **AI HUB**. When a visitor submits the 
 7. [Demo](#demo)
 8. [Setup Guide](#setup-guide)
 9. [Testing](#testing)
-10. [Security Notes](#security-notes)
-11. [Repository Structure](#repository-structure)
-12. [Author](#author)
+10. [Troubleshooting](#troubleshooting)
+11. [Security Notes](#security-notes)
+12. [Possible Improvements](#possible-improvements)
+13. [Repository Structure](#repository-structure)
+14. [Author](#author)
 
 ---
 
@@ -35,7 +37,7 @@ An end-to-end lead management system for **AI HUB**. When a visitor submits the 
 - Auto-generated unique `leadId` and submission timestamp
 - Every lead stored as a new row in Google Sheets
 - Personalized welcome email sent via Gmail (uses the lead's name, service, company and message)
-- Email delivery tracking: `Pending` → `Sent` or `Failed`, with a `emailSentAt` timestamp on success
+- Email delivery tracking: `Pending` → `Sent` or `Failed`, with an `emailSentAt` timestamp on success
 - Error handling: if the email node fails, the workflow continues on its error output and marks the lead as `Failed` instead of stopping silently
 
 ---
@@ -116,19 +118,21 @@ stateDiagram-v2
 
 ### Screenshots
 
-> TO BE CONFIRMED: replace the file names below with the actual files in the `images/` folder.
+**n8n workflow**
 
-| Lead data in Google Sheets | Email status in Google Sheets |
-|---|---|
-| ![Lead data](images/TO_BE_CONFIRMED_1.png) | ![Email status](images/TO_BE_CONFIRMED_2.png) |
+![n8n workflow](images/n8n-workflow.png)
 
-![n8n workflow](images/TO_BE_CONFIRMED_3.png)
+**Welcome email**
+
+![Welcome email](images/welcome-email.png)
+
+**Website**
+
+![AI HUB website](images/website.png)
 
 ### Video
 
-> TO BE CONFIRMED: replace with the actual file name in the `video/` folder.
-
-[Watch the demo video](video/TO_BE_CONFIRMED.mp4)
+[Watch the demo video](video/demo.mp4)
 
 ---
 
@@ -149,7 +153,7 @@ stateDiagram-v2
 3. **Select your Google Sheet**
    In all three Google Sheets nodes, choose your own spreadsheet and sheet tab.
 4. **Check the email node**
-   In *Send Welcome Email*, confirm the node is enabled and that *Send To* uses the lead's email (`{{ $('Prepare Lead Data').item.json.email }}`).
+   In *Send Welcome Email*, confirm the node is enabled and that *Send To* uses the lead's email: `{{ $('Prepare Lead Data').item.json.email }}`.
 5. **Activate and connect the form**
    Activate the workflow, copy the production webhook URL, and set it as the form's submit endpoint.
 
@@ -162,7 +166,17 @@ stateDiagram-v2
 3. Confirm the welcome email arrives in your inbox.
 4. To test the failure path, temporarily break the Gmail credential and submit again; the row should show `Failed`.
 
-> TO BE CONFIRMED: test results and execution screenshots to be added by the author.
+---
+
+## Troubleshooting
+
+| Problem | Likely cause | What to check |
+|---------|--------------|---------------|
+| Form submits but nothing happens in n8n | Workflow inactive or wrong webhook URL | Activate the workflow and use the **production** webhook URL, not the test URL |
+| Lead is saved but no email is sent | `Send Welcome Email` node is disabled | Enable the node |
+| Email goes to the wrong address | `Send To` is hardcoded | Use the lead's email expression from the Setup Guide |
+| `emailStatus` stays `Pending` | Status update did not find the row | Make sure the `leadId` column exists and the update nodes match on `leadId` |
+| Google Sheets / Gmail node errors | Credentials expired or missing | Reconnect the OAuth2 credentials |
 
 ---
 
@@ -175,13 +189,27 @@ stateDiagram-v2
 
 ---
 
+## Possible Improvements
+
+- Validate form input (required fields, email format) before saving the lead
+- Notify the sales team (for example by Slack or email) when a new lead arrives
+- Add duplicate-lead detection based on email
+- Add retry logic for failed emails
+- Restrict webhook origins to the production domain
+
+---
+
 ## Repository Structure
 
 ```
 .
 ├── lead-management-workflow.json   # n8n workflow export
 ├── images/                         # Screenshots
+│   ├── n8n-workflow.png
+│   ├── welcome-email.png
+│   └── website.png
 ├── video/                          # Demo video
+│   └── demo.mp4
 └── README.md
 ```
 
@@ -193,4 +221,4 @@ stateDiagram-v2
 n8n Developer & AI Automation Engineer
 
 GitHub: [@rakib1890](https://github.com/rakib1890)
-LinkedIn: TO BE CONFIRMED
+LinkedIn: TO BE CONFIRMED (add your profile link, or delete this line)
