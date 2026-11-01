@@ -1,0 +1,618 @@
+{
+  "name": "Lead management automation",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "lead-submit",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -384,
+        -48
+      ],
+      "id": "b8692899-fe17-4cda-9ce0-d3ccb61f7075",
+      "name": "Lead Management Automation",
+      "webhookId": "21f4aa69-9013-4dd8-8e9d-4716669e2c70"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "9fef0090-c379-4aee-957b-c340aa16db0d",
+              "name": "leadId",
+              "value": "={{ 'LEAD-' + Date.now() }}",
+              "type": "string"
+            },
+            {
+              "id": "a27ec9e1-2595-4f1e-a3d0-1130221ad047",
+              "name": "submissionDate",
+              "value": "={{ $now.toFormat('yyyy-MM-dd HH:mm:ss') }}",
+              "type": "string"
+            },
+            {
+              "id": "6fd57dda-f5f3-4356-9b12-a144364c026b",
+              "name": "name",
+              "value": "={{ $json.body.name }}",
+              "type": "string"
+            },
+            {
+              "id": "131c137d-5b12-49af-8ed4-878fffc37916",
+              "name": "email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "97e0bf47-79d1-440f-afc7-787d41799a19",
+              "name": "company",
+              "value": "={{ $json.body.company }}",
+              "type": "string"
+            },
+            {
+              "id": "4c125c32-11ff-4a13-8732-fb9234c20a8f",
+              "name": "service",
+              "value": "={{ $json.body.service }}",
+              "type": "string"
+            },
+            {
+              "id": "220448f1-c467-4427-badf-180b0f900ae0",
+              "name": "message",
+              "value": "={{ $json.body.message }}",
+              "type": "string"
+            },
+            {
+              "id": "8a19e71a-60d0-4baa-9e37-3a4ea85491b3",
+              "name": "emailStatus",
+              "value": "Pending",
+              "type": "string"
+            },
+            {
+              "id": "f814131a-776d-4de0-8880-5c7bfe38d3e1",
+              "name": "emailSentAt",
+              "value": "",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -224,
+        -48
+      ],
+      "id": "7601725b-2598-42c7-9234-c179507f1fe8",
+      "name": "Prepare Lead Data"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1gfQqO4kpwMyruTR0VAl8eeYpV5VRROKyCoLIGsmNvAE",
+          "mode": "list",
+          "cachedResultName": "Lead Management",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gfQqO4kpwMyruTR0VAl8eeYpV5VRROKyCoLIGsmNvAE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gfQqO4kpwMyruTR0VAl8eeYpV5VRROKyCoLIGsmNvAE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "autoMapInputData",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "leadId",
+              "displayName": "leadId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "submissionDate",
+              "displayName": "submissionDate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "emailStatus",
+              "displayName": "emailStatus",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "emailSentAt",
+              "displayName": "emailSentAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -64,
+        -48
+      ],
+      "id": "6b1903ae-124d-4cb1-9a21-c7a22d03815e",
+      "name": "Lead to Sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Wl9aV5aTHF8FAuEs",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sendTo": "rokibuhasan1890@gmail.com",
+        "subject": "=Thank you for your interest, {{ $('Prepare Lead Data').item.json.name }}!",
+        "message": "=<p>Hi {{ $('Prepare Lead Data').item.json.name }},</p>  <p>Thank you for reaching out and showing interest in our <strong>{{ $('Prepare Lead Data').item.json.service }}</strong> service.</p>  <p>We help businesses like <strong>{{ $('Prepare Lead Data').item.json.company }}</strong> grow with AI automation, workflow optimization, and custom integrations. Our team has received your message and will get back to you shortly.</p>  <p>Your message:<br><em>{{ $('Prepare Lead Data').item.json.message }}</em></p>  <p>Best regards,<br> [AI HUB]</p>",
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        96,
+        -48
+      ],
+      "id": "2c4c819c-8e3f-43ab-a4a4-61a6b4719f4a",
+      "name": "Send Welcome Email",
+      "webhookId": "fe26836d-9c01-4a48-942d-6c14838adf33",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "chmPG0stqLC1iTkc",
+          "name": "Gmail account"
+        }
+      },
+      "disabled": true,
+      "onError": "continueErrorOutput"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1gfQqO4kpwMyruTR0VAl8eeYpV5VRROKyCoLIGsmNvAE",
+          "mode": "list",
+          "cachedResultName": "Lead Management",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gfQqO4kpwMyruTR0VAl8eeYpV5VRROKyCoLIGsmNvAE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gfQqO4kpwMyruTR0VAl8eeYpV5VRROKyCoLIGsmNvAE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "leadId": "={{ $('Prepare Lead Data').item.json.leadId }}",
+            "emailStatus": "Sent",
+            "emailSentAt": "={{ $now.toFormat('yyyy-MM-dd HH:mm:ss') }}"
+          },
+          "matchingColumns": [
+            "leadId"
+          ],
+          "schema": [
+            {
+              "id": "leadId",
+              "displayName": "leadId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "submissionDate",
+              "displayName": "submissionDate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "emailStatus",
+              "displayName": "emailStatus",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "emailSentAt",
+              "displayName": "emailSentAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        272,
+        -144
+      ],
+      "id": "a543c342-8fbb-4abe-9b69-bc6ad69769df",
+      "name": "Update Status Sent",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Wl9aV5aTHF8FAuEs",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1gfQqO4kpwMyruTR0VAl8eeYpV5VRROKyCoLIGsmNvAE",
+          "mode": "list",
+          "cachedResultName": "Lead Management",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gfQqO4kpwMyruTR0VAl8eeYpV5VRROKyCoLIGsmNvAE/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1gfQqO4kpwMyruTR0VAl8eeYpV5VRROKyCoLIGsmNvAE/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "leadId": "={{ $('Prepare Lead Data').item.json.leadId }}",
+            "emailStatus": "Failed"
+          },
+          "matchingColumns": [
+            "leadId"
+          ],
+          "schema": [
+            {
+              "id": "leadId",
+              "displayName": "leadId",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "submissionDate",
+              "displayName": "submissionDate",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "company",
+              "displayName": "company",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "service",
+              "displayName": "service",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "message",
+              "displayName": "message",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "emailStatus",
+              "displayName": "emailStatus",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "emailSentAt",
+              "displayName": "emailSentAt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        272,
+        32
+      ],
+      "id": "4feec708-026a-43e0-bfaf-c86d1408eb29",
+      "name": "Update Status Failed",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "Wl9aV5aTHF8FAuEs",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Lead Management Automation": {
+      "main": [
+        [
+          {
+            "node": "Prepare Lead Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Lead Data": {
+      "main": [
+        [
+          {
+            "node": "Lead to Sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Lead to Sheet": {
+      "main": [
+        [
+          {
+            "node": "Send Welcome Email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send Welcome Email": {
+      "main": [
+        [
+          {
+            "node": "Update Status Sent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Update Status Failed",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "95ca11c2-1789-4777-b5f7-dbf56a2eea01",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "5ae4bf7fd85d63654a97e6f881fac3aecb6dac61edbd97531da4245c75db53e4"
+  },
+  "nodeGroups": [],
+  "id": "Ga4PuSubIzKeluTL",
+  "tags": []
+}
